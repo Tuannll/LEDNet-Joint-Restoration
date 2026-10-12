@@ -1,0 +1,26 @@
+# Core Deep Learning & Computer Vision
+torch>=1.7.1
+torchvision
+basicsr
+opencv-python
+scikit-image
+scipy
+numpy
+Pillow
+
+# Project Utilities & Training
+addict
+future
+lmdb
+pyyaml
+requests
+matplotlib
+tqdm
+yapf
+tb-nightly
+gdown
+
+# Metrics & Interactive Demo
+lpips
+pyiqa
+gradio>=4.0.0

@@ -1,0 +1,1 @@
+python -m basicsr.train -opt options/finetune-mydata.yml

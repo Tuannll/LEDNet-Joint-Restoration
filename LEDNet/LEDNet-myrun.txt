@@ -1,0 +1,1 @@
+python inference.py --checkpoint weights/lednet-mytrain.pth --input inputs/WorstPics --output results

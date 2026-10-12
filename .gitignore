@@ -1,0 +1,54 @@
+# ==========================================
+# Git Ignore for Deep Learning / PyTorch
+# ==========================================
+
+# Virtual Environments
+lednet_env/
+venv/
+.venv/
+env/
+ENV/
+*.env
+
+# Python Bytecode & Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Heavy Deep Learning Artifacts
+*.pth
+*.pt
+*.bin
+*.onnx
+*.engine
+*.state
+*.partial
+weights/*.pth
+!weights/.gitkeep
+LEDNet/weights/*.pth
+!LEDNet/weights/.gitkeep
+
+# Datasets & Experiments
+datasets/
+LEDNet/datasets/
+experiments/
+LEDNet/experiments/
+results/
+LEDNet/results/
+tb_logger/
+LEDNet/tb_logger/
+baocao-lednet/tb_logger/
+baocao-lednet/Evaluation/
+LEDNet/baocao-lednet/Evaluation/
+
+# IDE & OS Specific
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
