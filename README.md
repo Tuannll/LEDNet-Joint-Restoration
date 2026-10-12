@@ -1,6 +1,6 @@
 # 🌟 LEDNet: Joint Low-Light Enhancement and Deblurring
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](notebooks/LEDNet_Demo_Colab.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Tuannll/LEDNet-Joint-Restoration/blob/main/notebooks/LEDNet_Demo_Colab.ipynb)
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.12%2B-ee4c2c.svg)](https://pytorch.org/)
 [![Framework: BasicSR](https://img.shields.io/badge/Framework-BasicSR-green.svg)](https://github.com/XPixelGroup/BasicSR)
@@ -80,8 +80,8 @@ Thực nghiệm đo đạc độc lập trên tập kiểm thử phân bố ph�
 ### 4.1. Chuẩn bị môi trường
 ```bash
 # Clone repository
-git clone https://github.com/Tuannll/LEDNet-Enhancement.git
-cd LEDNet-Enhancement
+git clone https://github.com/Tuannll/LEDNet-Joint-Restoration.git
+cd LEDNet-Joint-Restoration
 
 # Tạo môi trường ảo Python 3.8 / 3.9
 conda create -n lednet python=3.8 -y
@@ -95,7 +95,10 @@ pip install -r requirements.txt
 Tải weights vào thư mục `LEDNet/weights/`:
 ```bash
 cd LEDNet
-# Tự động tải weights chính thức (ECCV 2022)
+# Tải checkpoint fine-tuned chính thức của đồ án (Release v1.0.0)
+python -c "from basicsr.utils.download_util import load_file_from_url; load_file_from_url('https://github.com/Tuannll/LEDNet-Joint-Restoration/releases/download/v1.0.0/lednet-mytrain.pth', model_dir='weights')"
+
+# (Tùy chọn) Tải weights gốc ECCV 2022
 python -c "from basicsr.utils.download_util import load_file_from_url; load_file_from_url('https://github.com/sczhou/LEDNet/releases/download/v0.1.0/lednet.pth', model_dir='weights')"
 ```
 
@@ -128,7 +131,7 @@ python evaluate.py --gt baocao-lednet/Evaluation/gt --input baocao-lednet/Evalua
 ## 📁 5. Cấu trúc Thư mục Dự án (Project Structure)
 
 ```text
-LEDNet-Enhancement/
+LEDNet-Joint-Restoration/
 ├── assets/                  # Ảnh minh họa, biểu đồ loss và logo cho README
 │   ├── LEDNet_LOLBlur_logo.png
 │   ├── training_loss.png
