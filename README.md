@@ -1,15 +1,29 @@
+<div align="center">
+
+<img src="assets/LEDNet_LOLBlur_logo.png" alt="LEDNet Architecture Logo" width="850">
+
 # 🌟 LEDNet: Joint Low-Light Enhancement and Deblurring
 
+**Khôi phục và nâng cao chất lượng ảnh chụp đêm bị rung mờ và thiếu sáng đồng thời dựa trên kiến trúc LEDNet (ECCV 2022) và framework BasicSR.**
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Tuannll/LEDNet-Joint-Restoration/blob/main/notebooks/LEDNet_Demo_Colab.ipynb)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.12%2B-ee4c2c.svg)](https://pytorch.org/)
-[![Framework: BasicSR](https://img.shields.io/badge/Framework-BasicSR-green.svg)](https://github.com/XPixelGroup/BasicSR)
-[![UI: Gradio](https://img.shields.io/badge/Demo-Gradio-orange.svg)](https://gradio.app/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg?style=flat-square)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-1.12%2B-ee4c2c.svg?style=flat-square)](https://pytorch.org/)
+[![Framework: BasicSR](https://img.shields.io/badge/Framework-BasicSR-green.svg?style=flat-square)](https://github.com/XPixelGroup/BasicSR)
+[![UI: Gradio](https://img.shields.io/badge/Demo-Gradio-orange.svg?style=flat-square)](https://gradio.app/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+
+<br />
 
 <p align="center">
-  <img src="assets/LEDNet_LOLBlur_logo.png" alt="LEDNet Architecture Logo" width="850">
+  <img src="./assets/before_after.png" alt="Before and After Comparison" width="850" />
 </p>
+
+[Giới thiệu](#-1-giới-thiệu-bài-toán-problem-formulation) • [Kiến trúc](#-2-kiến-trúc-mạng--đổi-mới-kỹ-thuật-architecture) • [Kết quả](#-3-kết-quả-thực-nghiệm--đánh-giá-định-lượng-benchmark) • [Cài đặt](#-4-cài-đặt--hướng-dẫn-sử-dụng-quickstart) • [Cấu trúc](#-5-cấu-trúc-thư-mục-dự-án-project-structure) • [Báo cáo](#-6-tài-liệu-báo-cáo--thuyết-trình) • [Trích dẫn](#-7-trích-dẫn--lời-cảm-ơn-citation)
+
+---
+
+</div>
 
 > **Đồ án môn học: Xử Lý Ảnh (Image Processing - XLA)**  
 > **Chủ đề:** Khôi phục và nâng cao chất lượng ảnh chụp đêm bị rung mờ và thiếu sáng đồng thời (*Joint Low-Light Enhancement and Deblurring*) dựa trên kiến trúc **LEDNet (ECCV 2022)** và framework **BasicSR**.
@@ -44,13 +58,17 @@ Mô hình LEDNet được xây dựng dựa trên mạng U-Net đa tỉ lệ nâ
    - Giúp mạng nắm bắt bối cảnh ánh sáng toàn cục (*global illumination context*), hạn chế hiện tượng bù sáng không đều hoặc halo artifact.
 2. **Curve Channel Attention Layer (CurveCALayer):**
    - Kế thừa cơ chế ước lượng đường cong bậc cao từ Zero-DCE:
-     $$\mathcal{F}_n(x) = \mathcal{F}_{n-1}(x) + \mathcal{A}_n \cdot \mathcal{F}_{n-1}(x) \cdot (1 - \mathcal{F}_{n-1}(x))$$
+     $$
+     \mathcal{F}_n(x) = \mathcal{F}_{n-1}(x) + \mathcal{A}_n \cdot \mathcal{F}_{n-1}(x) \cdot (1 - \mathcal{F}_{n-1}(x))
+     $$
    - Mở rộng dải dynamic range linh hoạt trên từng kênh đặc trưng mà không làm cháy sáng các vùng có sẵn nguồn sáng (đèn đường, biển hiệu).
 3. **Dynamic Filtering (`KernelConv2D` & `conv_fac_k`):**
    - Khác với phép tích chập tĩnh với trọng số cố định, mạng tự dự đoán kernel biến thiên theo tọa độ điểm ảnh.
    - Thích ứng chính xác với các vệt mờ chuyển động phi tuyến theo hướng bất kỳ.
 4. **Hàm mất mát hỗn hợp (Multi-term Loss Formulation):**
-   $$\mathcal{L}_{total} = \mathcal{L}_{pix} (L_1) + \lambda_{per} \mathcal{L}_{perceptual} (VGG\text{-}19) + \lambda_{side} \mathcal{L}_{side}$$
+   $$
+   \mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pix}} (L_1) + \lambda_{\text{per}} \mathcal{L}_{\text{perceptual}} (\text{VGG-19}) + \lambda_{\text{side}} \mathcal{L}_{\text{side}}
+   $$
 
 ---
 
@@ -92,6 +110,10 @@ pip install -r requirements.txt
 ```
 
 ### 4.2. Tải Checkpoints
+
+> [!NOTE]
+> Checkpoint fine-tuned `lednet-mytrain.pth` được lưu trữ tại GitHub Releases v1.0.0. Đảm bảo đường truyền ổn định khi tải trọng số mô hình (~100MB).
+
 Tải weights vào thư mục `LEDNet/weights/`:
 ```bash
 cd LEDNet
@@ -112,6 +134,10 @@ python inference.py --input path/to/dark_blurry_image.png --output results/singl
 ```
 
 ### 4.4. Khởi chạy Giao diện Tương tác Web (Gradio Web UI)
+
+> [!TIP]
+> Thêm cờ `--share` (`python app.py --share`) để tạo đường dẫn public trực tuyến (Gradio Live link) có thời hạn 72 giờ, thuận tiện cho việc trình chiếu demo từ xa mà không cần cấu hình port forwarding.
+
 Giao diện web trực quan hỗ trợ tải ảnh lên, so sánh Before/After, tính toán real-time chỉ số UER, VoL và FPS:
 ```bash
 python app.py
@@ -134,6 +160,7 @@ python evaluate.py --gt baocao-lednet/Evaluation/gt --input baocao-lednet/Evalua
 LEDNet-Joint-Restoration/
 ├── assets/                  # Ảnh minh họa, biểu đồ loss và logo cho README
 │   ├── LEDNet_LOLBlur_logo.png
+│   ├── before_after.png
 │   ├── training_loss.png
 │   └── BieuDo_UER_Chuan.png
 ├── docs/                    # Tài liệu học thuật đồ án
